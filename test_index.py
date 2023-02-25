@@ -1,6 +1,6 @@
 import pytest
 
-from app import say_hello, root
+from app import root
 
 
 @pytest.mark.asyncio
