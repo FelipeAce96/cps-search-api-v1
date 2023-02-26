@@ -70,6 +70,6 @@ async def GeneralSearch(raw_query : str, brand: str, topn:Optional[int] = 10):
     t0 = time.time()
     res = searcher.search(raw_query=raw_query, brand=brand, topn=topn)
     t1 = time.time()
-    print(f'Execution Time: {t1-t0:.3f} seconds')
+    print(f'Execution Time: ({t1-t0:.3f} seconds')
     if res['error'] is not None: return HTTPException(400, res)
     return res
