@@ -3,7 +3,7 @@ from gensim.models import Word2Vec as word2vec
 import pandas as pd
 from typing import Optional
 from searcher import SEARCHER
-
+import time
 
 
 # LOAD ALL INPUTS
@@ -57,14 +57,19 @@ async def getAvailableBrands():
 
 @app.get('/api/v1/search/general')
 async def GeneralSearch(raw_query : str, topn:Optional[int] = 100):
+    t0 = time.time()
     res = searcher.search(raw_query=raw_query, brand=None, topn=topn)
+    t1 = time.time()
+    print(f'Execution Time: {t1-t0:.3f} seconds')
     if res['error'] is not None: return HTTPException(400, res)
     return res
 
 @app.get('/api/v1/search/brand')
 async def GeneralSearch(raw_query : str, brand: str, topn:Optional[int] = 10):
     if brand not in available_brands: return  HTTPException(400, {"results":[], "error":"Not Available Brand"})
-
+    t0 = time.time()
     res = searcher.search(raw_query=raw_query, brand=brand, topn=topn)
+    t1 = time.time()
+    print(f'Execution Time: {t1-t0:.3f} seconds')
     if res['error'] is not None: return HTTPException(400, res)
     return res
